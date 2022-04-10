@@ -1,0 +1,24 @@
+1.Install Autodesk Maya 2018 
+2. Use the serial number: 666-69696969, 667-98989898, 400-45454545, 066-66666666 or whatever matches these templates.
+3. Use the product key: 657J1 
+4. Complete the installation and restart Maya. 
+
+5. Before clicking on Activate, you have 2 options: 
+
+Option A. 
+Disconnect the network card, remove the network cable or block it with a firewall, it will tell you that you need an Internet connection, just click "Close" and click "Activate" again. 
+
+Option B. 
+Click "Activate", and it will perform an online check, just press 
+then press and then activate activation. 
+6. Select, I have an activation 
+code from Autodesk. On the activation screen: run XFORCE 64-bit version as an administrator. 
+8. Click on the Mem patch (you should see the inscription "successfully patched") 
+9. Copy the request code into the keygen and press the generation button 10. 
+Now copy the activation code back to the activation screen and click "Next". You have a fully registered product Autodesk Maya. 
+
+Possible errors: You can receive this message when 
+your outbound traffic is blocked or you are disconnected from the Internet: 
+An error (800c0005) was returned in the online activation request, which does 
+not allow processing your request using our automated systems. Just click "Close". 
+Just make sure that you run Keygen as administrator from your hard drive and turned off UAC if you have Windows 7/8/10.

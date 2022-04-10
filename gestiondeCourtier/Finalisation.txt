@@ -1,0 +1,330 @@
+package appTransport;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+
+public class FinalisationInsc extends JFrame{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	JButton button ;
+    JButton button2;
+    JLabel label;
+    String s;
+    private JLabel labelLeft;
+    private JLabel labelright;
+    private JLabel sign;
+    private JButton button2_1;
+    private JButton button_1;
+    private JButton button_2;
+    private JLabel label_1;
+    private JLabel label_2;
+    private JButton button2_2;
+    private JLabel label_3;
+    private JButton button_3;
+    private JButton button2_3;
+	static Connection cnx = null;
+	static ResultSet resultat = null;
+	static PreparedStatement prepared = null;
+	private JLabel lblNewLabel;
+	int cmp = 0;
+    public FinalisationInsc(){
+    	super("FinalRegistration");
+
+    	cnx = ConnexionMysql.ConnectDb();
+    button = new JButton("ADD");
+    button.setFont(new Font("Calibri", Font.BOLD | Font.ITALIC, 9));
+    button.setBounds(768,339,54,18);
+    
+    button2 = new JButton("Browse");
+    button2.setHorizontalAlignment(SwingConstants.LEFT);
+    button2.setFont(new Font("Calibri", Font.BOLD | Font.ITALIC, 10));
+    button2.setBounds(704, 339, 64, 18);
+    
+
+    // photo 1
+    label = new JLabel();
+    label.setBounds(694,204,138,133);   
+  
+    //button to browse the image into jlabel
+    button2.addActionListener(new ActionListener(){
+        @Override
+     public void actionPerformed(ActionEvent e){
+         JFileChooser fileChooser = new JFileChooser();
+         fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+         FileNameExtensionFilter filter = new FileNameExtensionFilter("*.IMAGE", "jpg","gif","png");
+         fileChooser.addChoosableFileFilter(filter);
+         int result = fileChooser.showSaveDialog(null);
+         if(result == JFileChooser.APPROVE_OPTION){
+             File selectedFile = fileChooser.getSelectedFile();
+             String path = selectedFile.getAbsolutePath();
+             label.setIcon(ResizeImage(path));
+             s = path;
+             
+              }
+         else if(result == JFileChooser.CANCEL_OPTION){
+             System.out.println("No Data");
+         }
+     }
+    });
+
+    //button to insert image and some data into mysql database
+    button.addActionListener(new ActionListener(){
+    
+       @Override
+       public void actionPerformed(ActionEvent arg0){
+       	   try{
+               
+               PreparedStatement ps = cnx.prepareStatement("UPDATE courtier SET PDP = ? WHERE ID = '"+getid()+"'");
+               InputStream is = new FileInputStream(new File(s));
+               ps.setBlob(1,is);
+               ps.executeUpdate();
+               JOptionPane.showMessageDialog(null, "Photo de Profil Inserted");
+               cmp++;
+           }catch(Exception ex){
+               ex.printStackTrace();
+           }
+       }
+    });
+
+    getContentPane().add(label);
+   
+    getContentPane().add(button);
+    getContentPane().add(button2);
+    getContentPane().setLayout(null);
+    
+    label_1 = new JLabel();
+    label_1.setBounds(934, 203, 138, 133);
+    getContentPane().add(label_1);
+    
+    button_1 = new JButton("ADD");
+    button_1.addActionListener(new ActionListener() {
+    	public void actionPerformed(ActionEvent arg0) {
+    		 try{
+    			 PreparedStatement ps = cnx.prepareStatement("UPDATE courtier SET CERTIFICAT = ? WHERE ID = '"+getid()+"'");
+                
+                 InputStream is = new FileInputStream(new File(s));
+               
+                 ps.setBlob(1,is);
+                 ps.executeUpdate();
+                 JOptionPane.showMessageDialog(null, "Certificat Inserted");
+                 cmp++;
+             }catch(Exception ex){
+                 ex.printStackTrace();
+             }
+    	}
+    });
+    button_1.setFont(new Font("Calibri", Font.BOLD | Font.ITALIC, 9));
+    button_1.setBounds(1008, 335, 54, 18);
+    getContentPane().add(button_1);
+    
+    button2_1 = new JButton("Browse");
+    button2_1.addActionListener(new ActionListener() {
+    	public void actionPerformed(ActionEvent arg0) {
+    		 JFileChooser fileChooser = new JFileChooser();
+             fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+             FileNameExtensionFilter filter = new FileNameExtensionFilter("*.IMAGE", "jpg","gif","png");
+             fileChooser.addChoosableFileFilter(filter);
+             int result = fileChooser.showSaveDialog(null);
+             if(result == JFileChooser.APPROVE_OPTION){
+                 File selectedFile = fileChooser.getSelectedFile();
+                 String path = selectedFile.getAbsolutePath();
+                 label_1.setIcon(ResizeImage(path));
+                 s = path;
+                  }
+             else if(result == JFileChooser.CANCEL_OPTION){
+                 System.out.println("No Data");
+             }
+    	}
+    });
+    button2_1.setHorizontalAlignment(SwingConstants.LEFT);
+    button2_1.setFont(new Font("Calibri", Font.BOLD | Font.ITALIC, 10));
+    button2_1.setBounds(944, 335, 64, 18);
+    getContentPane().add(button2_1);
+    
+    label_2 = new JLabel();
+    label_2.setBounds(696, 388, 138, 133);
+    getContentPane().add(label_2);
+    
+    button_2 = new JButton("ADD");
+    button_2.addActionListener(new ActionListener() {
+    	public void actionPerformed(ActionEvent arg0) {
+    		 try{
+                 
+    			 PreparedStatement ps = cnx.prepareStatement("UPDATE courtier SET CINRECTO = ? WHERE ID = '"+getid()+"'");
+                 InputStream is = new FileInputStream(new File(s));
+               
+                 ps.setBlob(1,is);
+                 ps.executeUpdate();
+                 JOptionPane.showMessageDialog(null, "CIN Recto Inserted");
+                 cmp++;
+             }catch(Exception ex){
+                 ex.printStackTrace();
+             }
+    	}
+    });
+    button_2.setFont(new Font("Calibri", Font.BOLD | Font.ITALIC, 9));
+    button_2.setBounds(772, 522, 54, 18);
+    getContentPane().add(button_2);
+    
+    button2_2 = new JButton("Browse");
+    button2_2.addActionListener(new ActionListener() {
+    	public void actionPerformed(ActionEvent arg0) {
+    		 JFileChooser fileChooser = new JFileChooser();
+             fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+             FileNameExtensionFilter filter = new FileNameExtensionFilter("*.IMAGE", "jpg","gif","png");
+             fileChooser.addChoosableFileFilter(filter);
+             int result = fileChooser.showSaveDialog(null);
+             if(result == JFileChooser.APPROVE_OPTION){
+                 File selectedFile = fileChooser.getSelectedFile();
+                 String path = selectedFile.getAbsolutePath();
+                 label_2.setIcon(ResizeImage(path));
+                 s = path;
+                  }
+             else if(result == JFileChooser.CANCEL_OPTION){
+                 System.out.println("No Data");
+             }
+    	}
+    });
+    button2_2.setHorizontalAlignment(SwingConstants.LEFT);
+    button2_2.setFont(new Font("Calibri", Font.BOLD | Font.ITALIC, 10));
+    button2_2.setBounds(708, 522, 64, 18);
+    getContentPane().add(button2_2);
+    
+    label_3 = new JLabel();
+    label_3.setBounds(934, 391, 138, 133);
+    getContentPane().add(label_3);
+    
+    button_3 = new JButton("ADD");
+    button_3.addActionListener(new ActionListener() {
+    	public void actionPerformed(ActionEvent arg0) {
+    		 try{
+                 
+    			 PreparedStatement ps = cnx.prepareStatement("UPDATE courtier SET CINVERSO = ? WHERE ID = '"+getid()+"'");
+                 InputStream is = new FileInputStream(new File(s));
+               
+                 ps.setBlob(1,is);
+                 ps.executeUpdate();
+                 JOptionPane.showMessageDialog(null, "CIN Verso Inserted");
+                 cmp++;
+             }catch(Exception ex){
+                 ex.printStackTrace();
+             }
+    	}
+    });
+    button_3.setFont(new Font("Calibri", Font.BOLD | Font.ITALIC, 9));
+    button_3.setBounds(1009, 523, 54, 18);
+    getContentPane().add(button_3);
+    
+    button2_3 = new JButton("Browse");
+    button2_3.addActionListener(new ActionListener() {
+    	public void actionPerformed(ActionEvent arg0) {
+    		 JFileChooser fileChooser = new JFileChooser();
+             fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+             FileNameExtensionFilter filter = new FileNameExtensionFilter("*.IMAGE", "jpg","gif","png");
+             fileChooser.addChoosableFileFilter(filter);
+             int result = fileChooser.showSaveDialog(null);
+             if(result == JFileChooser.APPROVE_OPTION){
+                 File selectedFile = fileChooser.getSelectedFile();
+                 String path = selectedFile.getAbsolutePath();
+                 label_3.setIcon(ResizeImage(path));
+                 s = path;
+                  }
+             else if(result == JFileChooser.CANCEL_OPTION){
+                 System.out.println("No Data");
+             }
+    	}
+    });
+    button2_3.setHorizontalAlignment(SwingConstants.LEFT);
+    button2_3.setFont(new Font("Calibri", Font.BOLD | Font.ITALIC, 10));
+    button2_3.setBounds(945, 523, 64, 18);
+    getContentPane().add(button2_3);
+    
+    lblNewLabel = new JLabel("");
+    lblNewLabel.addMouseListener(new MouseAdapter() {
+    	@Override
+    	public void mouseClicked(MouseEvent e) 
+    	{
+			if(cmp < 4) 
+			{
+				JOptionPane.showMessageDialog(null , "Veillez remplir le champs vides !!");
+			}
+			else
+			{
+	    		dispose();
+	    		LogCoursier obj = new LogCoursier();
+	    		obj.setVisible(true);
+			}    	
+		}
+    });
+    lblNewLabel.setIcon(new ImageIcon("C:\\Users\\Dell\\Desktop\\uber\\boutton.png"));
+    lblNewLabel.setBounds(825, 595, 144, 50);
+    getContentPane().add(lblNewLabel);
+    
+    sign = new JLabel("");
+    sign.setIcon(new ImageIcon("C:\\Users\\Dell\\Desktop\\uber\\finalisationPrime.png"));
+    sign.setBounds(641, 88, 610, 489);
+    getContentPane().add(sign);
+    
+    labelright = new JLabel("");
+    labelright.setIcon(new ImageIcon("C:\\Users\\Dell\\Desktop\\uber\\leftblue.png"));
+    labelright.setBounds(586, 30, 634, 671);
+    getContentPane().add(labelright);
+    
+    labelLeft = new JLabel("New label");
+    labelLeft.setIcon(new ImageIcon("C:\\Users\\Dell\\Desktop\\uber\\cover.png"));
+    labelLeft.setBounds(36, 59, 622, 611);
+    getContentPane().add(labelLeft);
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    setSize(1200,750);
+    setVisible(true);
+    }
+    
+    public static int getid()
+    {
+    	int id = 0;
+ 	   String sqlID = "SELECT MAX(ID) as 'id' FROM courtier";
+ 	   try {
+ 		   prepared = cnx.prepareStatement(sqlID);
+ 		   resultat = prepared.executeQuery();
+ 		   while(resultat.next())
+ 		   {
+ 			   id = resultat.getInt("id");
+ 		   }
+ 	   }
+ 	   catch(SQLException e)
+ 	   {
+ 		   e.printStackTrace();
+ 	   }
+ 	   return id;
+    }
+    
+    //Methode To Resize The ImageIcon
+    public ImageIcon ResizeImage(String imgPath){
+        ImageIcon MyImage = new ImageIcon(imgPath);
+        Image img = MyImage.getImage();
+        Image newImage = img.getScaledInstance(label.getWidth(), label.getHeight(),Image.SCALE_SMOOTH);
+        ImageIcon image = new ImageIcon(newImage);
+        return image;
+    }
+ 
+    public static void main(String[] args){
+        new FinalisationInsc();
+    }
+   }
